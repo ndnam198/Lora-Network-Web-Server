@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>Hello EJS Template</title>
+        <!-- link css stylesheet to HTML file -->
+        <link href="/assets/style.css" type="text/css" rel="stylesheet" />
+        <!-- load CDN-->
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <h1>SIGN IN FORM</h1>
+
+        <!-- POST method to /login -->
+        <form>
+            <div class="mb-3">
+                <div class="form-label">Username:</div> <div><input id="userText" type="text" name="username" class="form-control"/></div>
+            </div>
+            <div class="mb-3">
+                <div class="form-label">Password:</div> <div><input id="passwdText" type="password" name="password" class="form-control" /></div>
+            </div>
+            <div><input type="checkbox" onclick="togglePasswdVisibility()">Show Password</div>
+            <div><button type="button" class="btn btn-success" onclick="onLoginClick()">Login</button></div>
+
+        </form>
+
+        <script>
+            function onLoginClick(){
+                let userName = document.getElementById("userText");
+                userNameValue = userName.value;
+                let password = document.getElementById("passwdText");
+                passwdValue = password.value;
+                debugger
+                $.ajax({
+                    type: "POST",
+                    url: "/login",
+                    data: JSON.stringify({userName: userNameValue, password: passwdValue}),
+                    dataType: "json",
+                    contentType: "application/json"
+                })
+            }
+            function togglePasswdVisibility() {
+                var x = document.getElementById("passwd");
+                if (x.type === "password") {
+                x.type = "text";
+                } else {
+                x.type = "password";
+                }
+            }
+
+        </script>
+    </body>
+</html>
