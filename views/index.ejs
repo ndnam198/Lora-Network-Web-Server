@@ -15,13 +15,13 @@
 
     <!-- Custom styles for this template -->
     <link href="../public/style.css" rel="stylesheet">
-    
+
     <!-- jQuery library -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
     <script src="../public/jquery-3.6.0.min.js"></script>
-    
+
     <!-- Latest compiled JavaScript -->
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
     <script src="../public/bootstrap5.0/js/bootstrap.min.js"></script>
 
     <style>
@@ -49,10 +49,11 @@
             <img class="mb-4" src="../public/images/tux.svg" alt="" width="100" height="100">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-            <div class="form-floating"> <input type="text" class="form-control" id="floatingInput"
-                    placeholder="name@example.com">
+            <div class="form-floating">
+                <input type="text" class="form-control" id="floatingUsername" placeholder="name@example.com">
                 <label for="floatingInput">Username</label>
             </div>
+
             <div class="form-floating">
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
                 <label for="floatingPassword">Password</label>
@@ -63,10 +64,31 @@
                     <input type="checkbox" value="remember-me"> Show password
                 </label>
             </div>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-            <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="onClickSignIn()">Sign in</button>
+            <div id="result"></div>
+            <p class="mt-5 mb-3 text-muted">Author<br></p>
         </form>
     </main>
 </body>
+<script>
+    function onClickSignIn() {
+        username = $("#floatingUsername").val()||"";
+        password = $("#floatingPassword").val()||"";
+        $.ajax({
+            type: "POST",
+            url: "/api/login",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({ "username": username, "password": password }),
+            success: function (response) {
+                $("#result").empty().append(response);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+</script>
 
 </html>

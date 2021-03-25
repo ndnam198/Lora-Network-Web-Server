@@ -1,5 +1,6 @@
 /* Express modules getting started: https://expressjs.com/en/starter/installing.html */
 const { text, query } = require("express");
+
 var express = require("express");
 var mysql = require("mysql");
 var app = express();
@@ -10,6 +11,7 @@ var apiController = require("./controllers/apiControllers");
 var homeController = require("./controllers/homeControllers");
 
 var reqIndex = 0;
+
 /**
  * Allow users to download files in public folder
  */
