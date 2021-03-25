@@ -13,7 +13,7 @@ var reqIndex = 0;
 /**
  * Allow users to download files in public folder
  */
-app.use("/assets", express.static(__dirname + "/public"));
+app.use("/public", express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
 
 /* custom middleware */

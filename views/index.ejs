@@ -1,53 +1,72 @@
-<html>
-    <head>
-        <title>Hello EJS Template</title>
-        <!-- link css stylesheet to HTML file -->
-        <link href="/assets/style.css" type="text/css" rel="stylesheet" />
-        <!-- load CDN-->
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    </head>
+<!doctype html>
+<html lang="en">
 
-    <body>
-        <h1>SIGN IN FORM</h1>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Nguyễn Đức Nam">
+    <meta name="generator" content="Hugo 0.82.0">
+    <title>LoRa Server - Sign in</title>
 
-        <!-- POST method to /login -->
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> -->
+    <link rel="stylesheet" type="text/css" href="../public/bootstrap5.0/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="../public/style.css" rel="stylesheet">
+    
+    <!-- jQuery library -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script src="../public/jquery-3.6.0.min.js"></script>
+    
+    <!-- Latest compiled JavaScript -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --> -->
+    <script src="../public/bootstrap5.0/js/bootstrap.min.js"></script>
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+</head>
+
+<body class="text-center">
+
+    <main class="form-signin">
         <form>
-            <div class="mb-3">
-                <div class="form-label">Username:</div> <div><input id="userText" type="text" name="username" class="form-control"/></div>
-            </div>
-            <div class="mb-3">
-                <div class="form-label">Password:</div> <div><input id="passwdText" type="password" name="password" class="form-control" /></div>
-            </div>
-            <div><input type="checkbox" onclick="togglePasswdVisibility()">Show Password</div>
-            <div><button type="button" class="btn btn-success" onclick="onLoginClick()">Login</button></div>
+            <img class="mb-4" src="../public/images/tux.svg" alt="" width="100" height="100">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
+            <div class="form-floating"> <input type="text" class="form-control" id="floatingInput"
+                    placeholder="name@example.com">
+                <label for="floatingInput">Username</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> Show password
+                </label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
         </form>
+    </main>
+</body>
 
-        <script>
-            function onLoginClick(){
-                let userName = document.getElementById("userText");
-                userNameValue = userName.value;
-                let password = document.getElementById("passwdText");
-                passwdValue = password.value;
-                debugger
-                $.ajax({
-                    type: "POST",
-                    url: "/login",
-                    data: JSON.stringify({userName: userNameValue, password: passwdValue}),
-                    dataType: "json",
-                    contentType: "application/json"
-                })
-            }
-            function togglePasswdVisibility() {
-                var x = document.getElementById("passwd");
-                if (x.type === "password") {
-                x.type = "text";
-                } else {
-                x.type = "password";
-                }
-            }
-
-        </script>
-    </body>
 </html>

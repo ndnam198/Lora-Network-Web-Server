@@ -1,3 +1,4 @@
 # Workspace files
 .vscode
-# assets 
+# modules
+node_modules

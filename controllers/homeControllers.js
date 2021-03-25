@@ -10,7 +10,7 @@ module.exports = function (app) {
     });
 
     /* After login */
-    app.post("/login", urlencodedParser, function (req, res) {
+    app.post("/login", function (req, res) {
         console.log(JSON.stringify(req))
         res.send("Welcome, " + req.body.username);
     });
