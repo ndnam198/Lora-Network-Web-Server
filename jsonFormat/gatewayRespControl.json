@@ -1,0 +1,7 @@
+{
+    "source": "gateway",
+    "type" : "response",
+    "result": "timeout",
+    "sequenceID": "17",
+    "timestamp": "1615998243"
+}

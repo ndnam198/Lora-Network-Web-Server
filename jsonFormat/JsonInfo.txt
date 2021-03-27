@@ -1,0 +1,21 @@
+Một số dạng bản tin:
+1. Bản tin cập nhật dữ liệu LoraSlaveNode từ LoraGateway lên server khi có thay đổi ở phía LoraSlaveNode (tự phát)
+2. Bản tin cập nhật dữ liệu LoraSlaveNode từ LoraGateway lên server khi có tín hiệu điều khiển từ user qua web (chủ động)
+3. Bản tin ping kiểm tra kết nối giữa server và LoraGateway, thực hiện bởi người operators, developers
+4. Bản tin phản hồi trạng thái của LoraGateway lên server 
+
+
+Giải thích các trường:
+"source": (luôn có) Chứa thông tin về thiết bị gửi bản tin, giá tị khả dụng "gateway" hoặc "server" 
+"type": (luôn có) quy định dạng của bản tin là "request" / "response" / "notify" / "control"
+"timestamp": (luôn có) Thời gian bản tin được gửi ở định dạng Unix
+"dataLength": Số lượng node mà thông tin được chứa trong trường data
+"data":
+    "nodeID": là giá trị duy nhất, đảm bảo khác nhau giữa các node để phân biệt các node trong mạng, để ở hệ thập phân
+    "street": con đường mà node được triển khai (giá trị này về lâu dài sẽ không thay đổi)
+    "deviceIndex": vị trí cụ thể mà node được đặt, phân biệt khi có nhiều thiết bị trên cùng 1 con đường
+    "status": Trạng thái của đèn, một trong 2 giá trị "On", "Off"
+    "nodeErrorCode": Mã lỗi mà thiết bị đang mắc phải, nếu không có lỗi lì list rỗng và bằng [], define ở thiết bị nhúng là mã lỗi, json chỉ chứa dữ liệu tường minh
+"sequenceID": đánh số các bản tin được gửi đi, một req và một res tương ứng phải có giá trị sequenceID trùng nhau, giá trị sẽ thay đổi trong quá trình hoạt động
+"reqData": chứa nodeID của node mà server muốn truy xuất dữ liệu từ LoraGateway
+"result": thể hiện kết quả của quá trình thực hiện lệnh điều khiển từ server, giá trị khả dụng: "ok", "timeout", "failed"

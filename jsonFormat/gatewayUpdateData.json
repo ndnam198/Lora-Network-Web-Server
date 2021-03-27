@@ -1,0 +1,24 @@
+{
+    "source": "gateway",
+    "type" : "update",
+    "result": "ok",
+    "dataLength": "*",
+    "chunk": [
+        {
+            "nodeID": "12051",
+            "street": "Đại Cồ Việt",
+            "deviceIndex": "1",
+            "status": "On",
+            "nodeErrorCode": []
+        },
+        {
+            "nodeID": "1949",
+            "street": "Đại Cồ Việt",
+            "deviceIndex": "2",
+            "status": "Off",
+            "nodeErrorCode": []
+        }
+    ],
+    "sequenceID": "15",
+    "timestamp": "1615998243"
+}

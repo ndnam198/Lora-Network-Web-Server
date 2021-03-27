@@ -29,7 +29,6 @@ app.use("/", urlencodedParser, function (req, res, next) {
         "bodyLength": Object.keys(req.body).length
     }
     console.log(reqSummary);
-    // console.log(req.body);
     next();
 });
 

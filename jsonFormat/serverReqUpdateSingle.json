@@ -1,0 +1,12 @@
+{
+    "source": "server",
+    "type": "request",
+    "dataLength": "1",
+    "chunk": [
+        {
+            "nodeID": "12051"
+        }
+    ],
+    "sequenceID": "15",
+    "timestamp": "1615998243"
+}

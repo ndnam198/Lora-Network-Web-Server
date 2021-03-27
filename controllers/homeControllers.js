@@ -15,12 +15,14 @@ module.exports = function (app) {
     app.post("/login", urlencodedParser, function (req, res) {
         if (!req.body) return res.sendStatus(400);
         console.log(req.body);
-        res.render('control');
         /* TODO: check username and password in databse */
-        var match = false;
-        if (match) {
+        if (req.body.username == "abc") {
+            console.log("bingo");
+            res.render('control');
         }
         else {
+            console.log("wrong login info");
+            res.sendStatus(404);
         }
         res.end();
         /* Return control page if username and password exist in database */

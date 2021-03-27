@@ -1,0 +1,21 @@
+{
+    "source": "server",
+    "type": "control",
+    "dataLength": "*",
+    "controlData": [
+        {
+            "nodeID": "1998",
+            "status": "on"
+        },
+        {
+            "nodeID": "1231",
+            "status": "off"
+        },
+        {
+            "nodeID": "11566",
+            "status": "off"
+        }
+    ],
+    "sequenceID": "17",
+    "timestamp": "1615998243"
+}

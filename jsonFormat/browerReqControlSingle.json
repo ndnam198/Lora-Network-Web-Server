@@ -1,0 +1,13 @@
+{
+    "source": "browser",
+    "type" : "control",
+    "dataLength": "1",
+    "chunk":[
+        {
+            "nodeID": "1998",
+            "status": "on"
+        }
+    ],
+    "sequenceID": "17",
+    "timestamp": "1615998243"
+}

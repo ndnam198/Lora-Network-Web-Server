@@ -1,0 +1,19 @@
+{
+    "source": "gateway",
+    "type" : "update",
+    "result": "ok",
+    "dataLength": "1",
+    "chunk": [
+        {
+            "nodeID": "12051",
+            "street": "Đại Cồ Việt",
+            "deviceIndex": "1",
+            "status": "On",
+            "nodeErrorCode": [
+                "lostConnect"
+            ]
+        }
+    ],
+    "sequenceID": "15",
+    "timestamp": "1615998243"
+}
