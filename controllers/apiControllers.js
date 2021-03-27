@@ -1,31 +1,31 @@
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
-
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 module.exports = function (app) {
     /* Định nghĩa 1 restful API: bao gồm các method xử lý các yêu cầu nhập, xuất, sửa, xóa của người dùng */
-    /* Xuất */
-    app.get("/api/user/:id", function (req, res) {
+    /* User query for data */
+    app.get("/api/control", function (req, res) {
         /* get data from database and response to client */
     });
 
-    /* Nhập */
-    app.post("/api/user", jsonParser, function (req, res) {
+    /* Receive user control data */
+    app.post("/api/control", urlencodedParser, function (req, res) {
         /* create new and save to the database */
-    })
+        console.log(req.body);
 
-    /* Nhập */
-    // app.post("/api/loginjson", jsonParser, function (req, res) {
-    //     username = req.params[0]
-    //     passwd = req.params[1]
-    // })
+        if (req.body.source == "server") {
+            /* TODO: Send data to gate way */
+            /* TODO: Response control result on HTML site */
+        }
+    });
 
-    /* Sửa */
-    app.put("/api/user", jsonParser, function (req, res) {
+    /* User want to input some new data */
+    app.put("/api/control", function (req, res) {
         /* update user and save to the database */
-    })
+    });
 
-    /* Xóa */
-    app.delete("/api/user/:id", function (req, res) {
+    /* User deletes some unwanted data */
+    app.delete("/api/control", function (req, res) {
         /* delete user from database */
-    })
+    });
 }

@@ -52,8 +52,8 @@
         </div>
         <div class="p-5">
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                <button type="button" class="btn btn-success">BẬT TOÀN BỘ</button>
-                <button type="button" class="btn btn-secondary">TẮT TOÀN BỘ</button>
+                <button type="button" id="btnAllOnID" class="btn btn-success">BẬT TOÀN BỘ</button>
+                <button type="button" id="btnAllOffID" class="btn btn-secondary">TẮT TOÀN BỘ</button>
             </div>
         </div>
         <div class="d-flex justify-content-center">
@@ -114,6 +114,62 @@
             </div>
         </div>
     </main>
+    <script>
+        document.getElementById("btnAllOnID").addEventListener("click", onAllLightClick);
+        document.getElementById("btnAllOffID").addEventListener("click", offAllLightClick);
+        var reqIndex = 0;
+        function onAllLightClick() {
+            reqIndex++;
+            var sendInfo = {
+                "source": "server",
+                "type": "control",
+                "controlData": {
+                    "nodeID": "*",
+                    "status": "on"
+                },
+                "sequenceID": reqIndex,
+                "timestamp": Math.floor(new Date().getTime() / 1000)
+            }
+            $.ajax({
+                type: "POST",
+                url: "/api/control",
+                dataType: "json",
+                success: function (response) {
+                    $("#result").empty().append(response);
+                },
+                error: function (err) {
+                    console.log(err);
+                },
+                data: JSON.stringify(sendInfo)
+            });
+        }
+
+        function offAllLightClick() {
+            reqIndex++;
+            var sendInfo = {
+                "source": "server",
+                "type": "control",
+                "controlData": {
+                    "nodeID": "*",
+                    "status": "off"
+                },
+                "sequenceID": reqIndex,
+                "timestamp": Math.floor(new Date().getTime() / 1000)
+            }
+            $.ajax({
+                type: "POST",
+                url: "/api/control",
+                dataType: "json",
+                success: function (response) {
+                    $("#result").empty().append(response);
+                },
+                error: function (err) {
+                    console.log(err);
+                },
+                data: JSON.stringify(sendInfo)
+            });
+        }
+    </script>
 </body>
 
 </html>

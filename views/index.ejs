@@ -45,18 +45,20 @@
 <body class="text-center">
 
     <main class="form-signin">
+        <!-- <form method="POST" action="/login"> -->
         <form>
             <img class="mb-4" src="../public/images/tux.svg" alt="" width="100" height="100">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
             <div class="form-floating">
-                <input type="text" class="form-control" id="floatingUsername" placeholder="name@example.com">
-                <label for="floatingInput">Username</label>
+                <input type="text" name="username" class="form-control" id="usernameID" placeholder="Username" required>
+                <label for="usernameID">Username</label>
             </div>
 
             <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password</label>
+                <input type="password" name="password" class="form-control" id="passwdID" placeholder="Password"
+                    required>
+                <label for="passwdID">Password</label>
             </div>
 
             <div class="checkbox mb-3">
@@ -65,30 +67,34 @@
                 </label>
             </div>
 
-            <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="onClickSignIn()">Sign in</button>
+            <button class="w-100 btn btn-lg btn-primary" type="button" id="submitID">Submit</button>
             <div id="result"></div>
-            <p class="mt-5 mb-3 text-muted">Author<br></p>
+            <p class="mt-5 mb-3 text-muted">Developer: ndnam198@gmail.com<br></p>
         </form>
     </main>
+    <script>
+        document.getElementById("submitID").addEventListener("click", onSignIn);
+        function onSignIn() {
+            var username = document.getElementById("usernameID").value;
+            var password = document.getElementById("passwdID").value;
+            var sendInfo = {
+                "username": username,
+                "password": password
+            };
+            $.ajax({
+                type: "POST",
+                url: "/login",
+                dataType: "json",
+                success: function (msg) {
+                    $("#result").empty().append(msg);
+                },
+                error: function (err) {
+                    console.log(err);
+                },
+                data: sendInfo
+            });
+        }
+    </script>
 </body>
-<script>
-    function onClickSignIn() {
-        username = $("#floatingUsername").val()||"";
-        password = $("#floatingPassword").val()||"";
-        $.ajax({
-            type: "POST",
-            url: "/api/login",
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify({ "username": username, "password": password }),
-            success: function (response) {
-                $("#result").empty().append(response);
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
-    }
-</script>
 
 </html>

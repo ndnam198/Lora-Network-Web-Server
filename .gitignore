@@ -2,3 +2,9 @@
 .vscode
 # modules
 node_modules
+
+# personal note
+assets/NOTE.txt
+
+# private files
+assets/login.json

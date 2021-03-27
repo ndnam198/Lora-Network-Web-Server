@@ -1,51 +1,35 @@
-/* Express modules getting started: https://expressjs.com/en/starter/installing.html */
 const { text, query } = require("express");
 
 var express = require("express");
-var mysql = require("mysql");
+var bodyParser = require("body-parser");
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var app = express();
-
 var port = 9000;
+var reqIndex = 0;
 
+/* import modules */
 var apiController = require("./controllers/apiControllers");
 var homeController = require("./controllers/homeControllers");
 
-var reqIndex = 0;
-
-/**
- * Allow users to download files in public folder
- */
+// Allow users to download files in public folder
 app.use("/public", express.static(__dirname + "/public"));
+// Set /view as root 
 app.set('view engine', 'ejs');
 
+
+
 /* custom middleware */
-app.use("/", function (req, res, next) {
+app.use("/", urlencodedParser, function (req, res, next) {
     console.log("\n");
-    console.log(new Date());
-    console.log(`Request number [${++reqIndex}]:`);
-
-    /* Truy xuất tới cơ sở dữ liệu */
-    // var connection = mysql.createConnection({
-    //     host: "localhost",
-    //     user: "ndnam198",
-    //     password: "123456",
-    //     database: "testdb"
-    // });
-    
-    // connection.connect(function(err) {
-    //     if (err) {
-    //       console.error('error connecting: ' + err.stack);
-    //       return;
-    //     }
-    //     console.log('Connected to XAMPP sql server as id ' + connection.threadId);
-    // });
-    
-    // connection.query('SELECT * FROM tbl_loranode', function (error, results, fields) {
-    //     if (error) throw error;
-    //     console.log('Queried data: ', results);
-    //   });
-
-    // connection.end();
+    reqSummary = {
+        "timeStamp": new Date(),
+        "method": req.method,
+        "sequenceID": ++reqIndex,
+        "url": req.url,
+        "bodyLength": Object.keys(req.body).length
+    }
+    console.log(reqSummary);
+    // console.log(req.body);
     next();
 });
 

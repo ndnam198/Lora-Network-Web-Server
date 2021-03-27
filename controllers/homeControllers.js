@@ -1,18 +1,28 @@
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 /* All route functions that related to Home url */
 module.exports = function (app) {
-    
+
     /* Home page */
     app.get("/", function (req, res) {
-        // res.render('index');
-        res.render('control');
+        res.render('index');
+        res.end();
     });
 
     /* After login */
-    app.post("/api/login", function (req, res) {
-        console.log(JSON.stringify(req));
-        res.send("Welcome, " + req.body.username);
+    app.post("/login", urlencodedParser, function (req, res) {
+        if (!req.body) return res.sendStatus(400);
+        console.log(req.body);
+        res.render('control');
+        /* TODO: check username and password in databse */
+        var match = false;
+        if (match) {
+        }
+        else {
+        }
+        res.end();
+        /* Return control page if username and password exist in database */
     });
 }
