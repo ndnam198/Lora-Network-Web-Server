@@ -17,8 +17,8 @@ module.exports = function (app) {
         console.log(req.body);
         /* TODO: check username and password in databse */
         if (req.body.username == "abc") {
-            console.log("bingo");
             res.render('control');
+            console.log("bingo");
         }
         else {
             console.log("wrong login info");
