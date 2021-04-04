@@ -69,7 +69,7 @@
 
             <button class="w-100 btn btn-lg btn-primary" type="button" id="submitID">Submit</button>
             <div id="result"></div>
-            <p class="mt-5 mb-3 text-muted">Developer: ndnam198@gmail.com<br></p>
+            <p class="mt-5 mb-3 text-muted">@author: namnguyen<br></p>
         </form>
     </main>
     <script>
@@ -87,6 +87,7 @@
                 dataType: "json",
                 success: function (msg) {
                     $("#result").empty().append(msg);
+                    window.location.href = "/control";
                 },
                 error: function (err) {
                     console.log(err);

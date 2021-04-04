@@ -4,7 +4,7 @@
   "description": "LoRa webserver",
   "main": "app.js",
   "scripts": {
-    "test": "start"
+    "test": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,8 @@
     "express-session": "^1.17.1",
     "jquery": "^3.6.0",
     "mongodb": "^3.6.5",
-    "socket.io": "^4.0.0",
-    "url": "^0.11.0"
+    "socket.io": "^4.0.1",
+    "url": "^0.11.0",
+    "xml-js": "^1.6.11"
   }
 }

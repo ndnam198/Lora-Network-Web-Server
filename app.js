@@ -4,7 +4,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var app = express();
-var port = 9000;
+var port = 3000;
 var reqIndex = 0;
 
 /* import modules */
