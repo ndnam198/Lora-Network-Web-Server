@@ -24,12 +24,6 @@ module.exports = function (app) {
         res.end();
     });
 
-    app.get("/control", function (req, res) {
-        var node1 = "on"
-        res.render('control', { node1: node1 });
-        res.end();
-    });
-
     app.get("/index", function (req, res) {
         res.render('index');
         res.end();
@@ -40,8 +34,8 @@ module.exports = function (app) {
         var result = convert.xml2js(xml, options);
         if (!result || !result.data.nodedata || !result.data.nodedata.node || !Array.isArray(result.data.nodedata.node))
             return res.status(404);
-        ret = modifier.modifyNode('123', 'Trần Hưng Đạo', 'OFF', '');
-        console.log(ret);
+        // ret = modifier.modifyNode('123', 'Trần Hưng Đạo', 'OFF', '');
+        // console.log(ret);
         let nodeData = {};
         for (let i = 0; i < 3; i++) {
             nodeData[`node${i}_id`] = result.data.nodedata.node[i].nodeID._text;
@@ -56,8 +50,7 @@ module.exports = function (app) {
     app.post("/login", urlencodedParser, function (req, res) {
         if (!req.body) return res.sendStatus(400);
         console.log(req.body);
-        /* TODO: check username and password in databse */
-        var xml = require('fs').readFileSync(__dirname + '/nodeData.xml', 'utf8');
+        var xml = require('fs').readFileSync(__dirname + '/../data/nodeData.xml', 'utf8');
         var result = convert.xml2js(xml, options);
         if (!result || !result.data.users || !result.data.users.user || !Array.isArray(result.data.users.user))
             return res.status(404);

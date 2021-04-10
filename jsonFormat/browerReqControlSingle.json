@@ -1,8 +1,8 @@
 {
     "source": "browser",
-    "type" : "control",
+    "type": "control",
     "dataLength": "1",
-    "chunk":[
+    "chunk": [
         {
             "nodeID": "1998",
             "status": "on"

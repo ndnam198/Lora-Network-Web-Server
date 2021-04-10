@@ -1,4 +1,6 @@
-var convert = require('xml-js');
+var xmlParser = require('xml-js');
+var fs = require('fs');
+const formatXml = require("xml-formatter");
 var options = {
     compact: true,
     trim: true,
@@ -10,23 +12,52 @@ var options = {
     ignoreCdata: true,
     ignoreDoctype: true
 };
+var xmlPath = __dirname + '/../data/nodeData.xml';
+
+function modifyXml(jsonContent) {
+    fs.writeFile(xmlPath, formatXml(xmlParser.js2xml(jsonContent, options), { collapseContent: true }), function (err, currentXml) {
+        if (err) {
+            console.log("err")
+        } else {
+            console.log("Xml file successfully updated.")
+        }
+    })
+    return;
+}
 
 module.exports = {
     modifyNode: function (id, location, status, err) {
-        var xml = require('fs').readFileSync(__dirname + '/../data/nodeData.xml', 'utf8');
-        var result = convert.xml2js(xml, options);
-        if (!result || !result.data.nodedata || !result.data.nodedata.node || !Array.isArray(result.data.nodedata.node))
+        var xml = fs.readFileSync(xmlPath, 'utf8');
+        var currentXml = xmlParser.xml2js(xml, options);
+        if (!currentXml || !currentXml.data.nodedata || !currentXml.data.nodedata.node || !Array.isArray(currentXml.data.nodedata.node))
             return;
-        else {
-            for (let i = 0; i < 3; i++) {
-                if (id == result.data.nodedata.node[i].nodeID._text) {
-                    result.data.nodedata.node[i].location._text = location;
-                    result.data.nodedata.node[i].status._text = status;
-                    result.data.nodedata.node[i].error._text = err;
-                    return 1;
-                }
+        for (let i = 0; i < 3; i++) {
+            if (currentXml.data.nodedata.node[i].nodeID._text == id) {
+                /* if node has no error */
+                if (currentXml.data.nodedata.node[i].error._text == null)
+                    if (currentXml.data.nodedata.node[i].status._text != status && status != null)
+                        currentXml.data.nodedata.node[i].status._text = status;
+                if (currentXml.data.nodedata.node[i].location._text != location && location != null)
+                    currentXml.data.nodedata.node[i].location._text = location;
+                if (currentXml.data.nodedata.node[i].error._text != err && err != null)
+                    currentXml.data.nodedata.node[i].error._text = err;
             }
-            return;
         }
+        modifyXml(currentXml);
+        return 1;
+    },
+
+    modifyAll: function (status) {
+        var xml = fs.readFileSync(xmlPath, 'utf8');
+        var currentXml = xmlParser.xml2js(xml, options);
+        if (!currentXml || !currentXml.data.nodedata || !currentXml.data.nodedata.node || !Array.isArray(currentXml.data.nodedata.node))
+            return;
+        for (let i = 0; i < 3; i++) {
+            /* if node has no error */
+            if (currentXml.data.nodedata.node[i].error._text == null)
+                currentXml.data.nodedata.node[i].status._text = status;
+        }
+        modifyXml(currentXml);
+        return 1;
     }
 }

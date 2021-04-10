@@ -20,7 +20,6 @@
     <!-- Latest compiled JavaScript -->
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
     <script src="../public/bootstrap5.0/js/bootstrap.min.js"></script>
-    <script src="../public/socket.io.min.js"></script>
 
     <style>
         .bd-placeholder-img {
@@ -64,7 +63,7 @@
                 <!-- Single node block -->
                 <div class="col-2 text-center border rounded p-2" id="node0_background">
                     <div class="border border-dark border-secondary p-1">
-                        <span>ID: </span><span id="node0_id">NodeID</span>
+                        <span>ID: </span><span id="node0_id">NodeID0</span>
                     </div>
                     <div>
                         <div class="p-1">
@@ -78,8 +77,8 @@
                         </div>
                         <div class="p-2 d-flex justify-content-center">
                             <div class="btn-group" role="group">
-                                <div type="button" class="btn btn-success">Bật</div>
-                                <div type="button" class="btn btn-secondary">Tắt</div>
+                                <div type="button" class="btn btn-success" id="onButton0_id">Bật</div>
+                                <div type="button" class="btn btn-secondary" id="offButton0_id">Tắt</div>
                             </div>
                         </div>
                     </div>
@@ -87,7 +86,7 @@
                 <!-- Single node block -->
                 <div class="col-2 text-center border rounded p-2" id="node1_background">
                     <div class="border border-dark border-secondary p-1">
-                        <span>ID: </span><span id="node1_id">NodeID</span>
+                        <span>ID: </span><span id="node1_id">NodeID1</span>
                     </div>
                     <div>
                         <div class="p-1">
@@ -101,8 +100,8 @@
                         </div>
                         <div class="p-2 d-flex justify-content-center">
                             <div class="btn-group" role="group">
-                                <div type="button" class="btn btn-success">Bật</div>
-                                <div type="button" class="btn btn-secondary">Tắt</div>
+                                <div type="button" class="btn btn-success" id="onButton1_id">Bật</div>
+                                <div type="button" class="btn btn-secondary" id="offButton1_id">Tắt</div>
                             </div>
                         </div>
                     </div>
@@ -110,7 +109,7 @@
                 <!-- Single node block -->
                 <div class="col-2 text-center border rounded p-2" id="node2_background">
                     <div class="border border-dark border-secondary p-1">
-                        <span>ID: </span><span id="node2_id">NodeID</span>
+                        <span>ID: </span><span id="node2_id">NodeID2</span>
                     </div>
                     <div>
                         <div class="p-1">
@@ -124,8 +123,8 @@
                         </div>
                         <div class="p-2 d-flex justify-content-center">
                             <div class="btn-group" role="group">
-                                <div type="button" class="btn btn-success">Bật</div>
-                                <div type="button" class="btn btn-secondary">Tắt</div>
+                                <div type="button" class="btn btn-success" id="onButton2_id">Bật</div>
+                                <div type="button" class="btn btn-secondary" id="offButton2_id">Tắt</div>
                             </div>
                         </div>
                     </div>
@@ -137,7 +136,7 @@
         </div>
     </main>
     <script>
-        //begin reload status
+        /* Reload function every 2000ms */
         var reRender = setInterval(() => {
             $.ajax({
                 type: "GET",
@@ -166,66 +165,115 @@
             });
         }, 2000);
         $(document).ready(function () {
-            reRender();
-        })
-        $(document).unload(function () {
-            clearInterval(reRender);
-        })
-        //end reload status
-        document.getElementById("btnAllOnID").addEventListener("click", onAllLightClick);
-        document.getElementById("btnAllOffID").addEventListener("click", offAllLightClick);
-        var reqIndex = 0;
-        function onAllLightClick() {
-            reqIndex++;
-            var sendInfo = {
-                "source": "server",
-                "type": "control",
-                "controlData": {
-                    "nodeID": "*",
-                    "status": "on"
-                },
-                "sequenceID": reqIndex,
-                "timestamp": Math.floor(new Date().getTime() / 1000)
+            /* Add handler for control button */
+            var reqIndex = 0;
+            document.getElementById("btnAllOnID").addEventListener("click", onAllLightClick);
+            document.getElementById("btnAllOffID").addEventListener("click", offAllLightClick);
+            for (let i = 0; i < 3; i++) {
+                document.getElementById(`onButton${i}_id`).addEventListener("click", onSingleLightClick);
+                document.getElementById(`offButton${i}_id`).addEventListener("click", offSingleLightClick);
             }
-            $.ajax({
-                type: "POST",
-                url: "/api/control",
-                dataType: "json",
-                success: function (response) {
-                    $("#result").empty().append(response);
-                },
-                error: function (err) {
-                    console.log(err);
-                },
-                data: JSON.stringify(sendInfo)
-            });
-        }
+            function onAllLightClick() {
+                reqIndex++;
+                console.log("Turn ON all");
+                var sendInfo = {
+                    "source": "browser",
+                    "type": "control",
+                    "nodeID": '*',
+                    "status": "on",
+                    "sequenceID": reqIndex,
+                    "timestamp": Math.floor(new Date().getTime() / 1000)
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/control/all",
+                    dataType: "json",
+                    success: function (response) {
+                        $("#result").empty().append(response);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    },
+                    data: sendInfo
+                });
+            }
 
-        function offAllLightClick() {
-            reqIndex++;
-            var sendInfo = {
-                "source": "server",
-                "type": "control",
-                "controlData": {
-                    "nodeID": "*",
-                    "status": "off"
-                },
-                "sequenceID": reqIndex,
-                "timestamp": Math.floor(new Date().getTime() / 1000)
+            function offAllLightClick() {
+                reqIndex++;
+                console.log("Turn OFF all");
+                var sendInfo = {
+                    "source": "browser",
+                    "type": "control",
+                    "nodeID": '*',
+                    "status": "off",
+                    "sequenceID": reqIndex,
+                    "timestamp": Math.floor(new Date().getTime() / 1000)
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/control/all",
+                    dataType: "json",
+                    success: function (response) {
+                        $("#result").empty().append(response);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    },
+                    data: sendInfo
+                });
             }
-            $.ajax({
-                type: "POST",
-                url: "/api/control",
-                dataType: "json",
-                success: function (response) {
-                    $("#result").empty().append(response);
-                },
-                error: function (err) {
-                    console.log(err);
-                },
-                data: JSON.stringify(sendInfo)
-            });
-        }
+
+            function onSingleLightClick(elementID) {
+                nodeNumber = this.id.match(/\d+/)[0];
+                console.log("Turn ON NodeID:" + $(`#node${nodeNumber}_id`).text());
+                var sendInfo = {
+                    "source": "browser",
+                    "type": "control",
+                    "nodeID": $(`#node${nodeNumber}_id`).text(),
+                    "status": "on",
+                    "sequenceID": reqIndex,
+                    "timestamp": Math.floor(new Date().getTime() / 1000)
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/control/single",
+                    dataType: "json",
+                    success: function (response) {
+                        $("#result").empty().append(response);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    },
+                    data: sendInfo
+                });
+            }
+
+            function offSingleLightClick(ele) {
+                nodeNumber = this.id.match(/\d+/)[0];
+                console.log("Turn OFF NodeID:" + $(`#node${nodeNumber}_id`).text());
+                var sendInfo = {
+                    "source": "browser",
+                    "type": "control",
+                    "nodeID": $(`#node${nodeNumber}_id`).text(),
+                    "status": "off",
+                    "sequenceID": reqIndex,
+                    "timestamp": Math.floor(new Date().getTime() / 1000)
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/control/single",
+                    dataType: "json",
+                    success: function (response) {
+                        $("#result").empty().append(response);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    },
+                    data: sendInfo
+                });
+            }
+            // location.reload()
+        })
     </script>
 </body>
 

@@ -16,19 +16,19 @@ app.use("/public", express.static(__dirname + "/public"));
 // Set /view as root 
 app.set('view engine', 'ejs');
 
-
-
 /* custom middleware */
 app.use("/", urlencodedParser, function (req, res, next) {
-    console.log("\n");
-    reqSummary = {
-        "timeStamp": new Date(),
-        "method": req.method,
-        "sequenceID": ++reqIndex,
-        "url": req.url,
-        "bodyLength": Object.keys(req.body).length
-    }
-    console.log(reqSummary);
+    console.log(`${reqIndex++}`);
+    // reqSummary = {
+    //     "timeStamp": new Date(),
+    //     "method": req.method,
+    //     "sequenceID": ++reqIndex,
+    //     "url": req.url,
+    //     "bodyLength": Object.keys(req.body).length
+    // }
+    // console.log(reqSummary);
+    // console.log('body');
+    // console.log(req.body);
     next();
 });
 

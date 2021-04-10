@@ -87,6 +87,7 @@
                 dataType: "json",
                 success: function (msg) {
                     $("#result").empty().append(msg);
+                    /* request render new site */
                     window.location.href = "/control";
                 },
                 error: function (err) {
